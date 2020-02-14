@@ -1,0 +1,49 @@
+
+*{
+	padding: 0;
+	margin: 0;
+}
+.adminHeader{
+	width: 100%;
+	height: 100px;
+	background-color:#b3b3ff;
+	margin: 0;
+}
+
+.nav ul
+{
+	list-style: none;
+	 background-color: #ff6347;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+}
+
+.nav li{
+	display: inline-block;
+	
+}
+.nav li a{
+	display: block;
+	text-decoration: none;
+	color: #fff;
+	font-size: 17px;
+	font-family: helvetica;
+	transition: 0.4s;
+	width: 150px;
+	padding: 15px;
+}
+
+.nav a:hover{
+	background: #000;
+	transition: 0.4s;
+}
+
+.cAdjustText{
+	text-align: center;
+	font-size: 30px;
+	font-family: helvetica;
+	position: absolute;
+	top: 40px;
+	left: 43%;
+}

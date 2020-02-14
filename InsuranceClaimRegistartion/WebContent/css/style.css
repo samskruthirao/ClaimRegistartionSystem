@@ -1,0 +1,143 @@
+*{
+	margin: 0;
+	padding: 0;
+	font-family: Century Gothic;
+	box-sizing: border-box;
+}
+
+header{
+	background-image: url(../img/insurance.jpg);
+	height: 100vh;
+	background-size: cover;
+	background-position: center;
+}
+
+nav{
+	width: 100%;
+	height: 12vh;
+	background: #ebb542;
+	opacity: 0.7;
+}
+
+.navbar-nav{
+	float: right;
+	list-style-type: none;
+	margin-top: 35px;
+	font-weight: bolder;
+	font-size: 15px;
+}
+
+.navbar-nav .nav-item{
+	display: inline-block;
+}
+
+.navbar-nav .nav-item a{
+	text-decoration: none;
+	color: #cf4083;
+	padding: 5px 20px;
+	border:1px solid #cf4083;
+	transition: 0.6s ease;
+	opacity: 1.0;
+}
+
+.navbar-nav .nav-item a:hover{
+	background-color: #fff;
+	color: #000;
+}
+
+.logo a{
+		float: left;
+		height: auto;
+		margin-left: 25px;
+}
+
+
+.menu{
+	max-width: 1200px;
+	margin: auto;
+
+}
+
+.banner-title{
+	position: absolute;
+	left: 20%;
+	top: 30%;
+	font-size: 25px;
+	transition: 0.6s ease;
+	/*transform: (-50%,-50%);*/
+}
+
+.banner-title{
+	color: #fff;
+}
+
+
+
+.popup
+{
+	background:rgba(0,0,0,0.6);
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+.popup-content{
+	width: 550px;
+	height: 350px;
+	padding: 20px;
+	background: #fff;
+	border-radius: 5px;
+	position: relative;
+}
+
+#loginbtn{
+	background: #1dcf3b;
+	padding: 10px 15px;
+	color: #34495e;
+	font-weight: bolder;
+	text-transform: uppercase;
+	font-size: 15px;
+	border-radius: 10px;
+	box-shadow: 6px 6px 29px -4px rgba(0,0,0,.75);
+	margin-top: 15px;
+	text-decoration: none;
+	transition: 0.4s;
+}
+
+#loginbtn:hover{
+	background: #34495e;
+	color: #fff;
+}
+#errormsg
+{
+	display: none;
+}
+input
+{
+	margin: 15px auto;
+	display: block;
+	width: 50%;
+	padding: 8px;
+	border:1px solid gray;
+}
+
+.close
+{
+	position: absolute;
+	top: -15px;
+	right: -15px;
+	background: #fff;
+	height: 30px;
+	width: 30px;
+	border-radius: 50%;
+	box-shadow: 6px 6px 29px -4px rgba(0,0,0,.75);
+	cursor: pointer;
+}
+#topbtn:hover{
+	background:#00ff00;
+}
