@@ -1,0 +1,264 @@
+
+SQL> create table userrole(username varchar2(20) on delete cascade,  password varchar2(12), rolecode varchar2(10), accountNo number(10) unique not null, agentName varchar2(20), constraint uname_acc_Constraint PRIMARY KEY(username));
+create table userrole(username varchar2(20) on delete cascade,  password varchar2(12), rolecode varchar2(10), accountNo number(10) unique not null, agentName varchar2(20), constraint uname_acc_Constraint PRIMARY KEY(username))
+                                            *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> create table userrole(username varchar2(20),  password varchar2(12) not null, rolecode varchar2(10) not null, accountNo number(10) unique not null, agentName varchar2(20), constraint uname_acc_Constraint PRIMARY KEY(username));
+
+Table created.
+
+SQL> create table policyType(policyNumber number(10), policyName varchar2(50), constraint policyNum_pk primary key(policyNumber));
+
+Table created.
+
+SQL> drop table policyType;
+
+Table dropped.
+
+SQL> create table policyType(policyNumber number(10), policyName varchar2(50) unique, policyPremium double(20,8) not null, constraint policyNum_pk primary key(policyNumber));
+create table policyType(policyNumber number(10), policyName varchar2(50) unique, policyPremium double(20,8) not null, constraint policyNum_pk primary key(policyNumber))
+                                                                                                     *
+ERROR at line 1:
+ORA-00905: missing keyword
+
+
+SQL> create table policyType(policyNumber number(10), policyName varchar2(50) unique, policyPremium number(20,8) not null, constraint policyNum_pk primary key(policyNumber));
+
+Table created.
+
+SQL> create table policy(policyNumber number(10), accountNumber number(10), status varchar2(10), constraint policyNum_fk foreign key(policyNumber) references policyType(policyNumber) ON DELETE CASCADE, constraint accNum foreign key(accountNumber) references userrole(accountNo) ON DELETE CASCADE);
+
+Table created.
+
+SQL> drop table policy;
+
+Table dropped.
+
+SQL> create table policy(policyNumber number(10), accountNumber number(10), status varchar2(20), constraint policyNum_fk foreign key(policyNumber) references policyType(policyNumber) ON DELETE CASCADE, constraint accNum foreign key(accountNumber) references userrole(accountNo) ON DELETE CASCADE);
+
+Table created.
+
+SQL> create table claim(claimNumber number(10), claimReason varchar2(50), accidentStreet varchar2(50), accidentCity varchar2(50), accidentState varchar2(50), accidentZip number(30), claimType varchar2(50), policyNumber number(30), username varchar2(20), constraint claimNumer_pk primary key(claimNumber), constraint policyNumber_fk foreign key(policyNumber) References policyType(policyNumber) ON DELETE CASCADE, constraint uname_fk foreign key(username) references userrole(username) ON DELETE CASCADE);
+
+Table created.
+
+SQL> create table QuestionDetails(questionId varchar2(100) primary key, policyNumber number(10), question varchar2(300), constraint policyNum_ques_fk foreign key(policyNumber) references policyType(policyNumber) ON DELETE CASCADE);
+
+Table created.
+
+SQL> create table policyDetails(policyNumber number(10), questionId varchar2(100), answer varchar2(30), username varchar2(20), constraint policyNum_policyDetails_fk foreign key(policyNumber) references policyType(policyNumber) ON DELETE CASCADE, constraint username_policyDetails_fk foreign key(username) references userrole(username) ON DELETE CASCADE, constraint quesId_fk foreign key(questionId) references QuestionDetails(questionId) ON DELETE CASCADE);
+
+Table created.
+
+SQL> create sequence claimNumber_sequence start with 1 increment by 1 minvalue 1;
+
+Sequence created.
+
+SQL> insert into userrole values('admin', 'admin123', 'CLAIM ADJUSTER', 1234567, 'none');
+insert into userrole values('admin', 'admin123', 'CLAIM ADJUSTER', 1234567, 'none')
+                                                 *
+ERROR at line 1:
+ORA-12899: value too large for column "SYSTEM"."USERROLE"."ROLECODE" (actual: 14, maximum: 10)
+
+
+SQL> alter table userrole modify rolecode varchar2(20) not null;
+alter table userrole modify rolecode varchar2(20) not null
+                            *
+ERROR at line 1:
+ORA-01442: column to be modified to NOT NULL is already NOT NULL
+
+
+SQL> alter table userrole modify rolecode varchar2(20);
+
+Table altered.
+
+SQL> desc userrole;
+ Name
+
+
+                                                                                                                   Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ USERNAME
+
+
+                                                                                                                   NOT NULL VARCHAR2(20)
+ PASSWORD
+
+
+                                                                                                                   NOT NULL VARCHAR2(12)
+ ROLECODE
+
+
+                                                                                                                   NOT NULL VARCHAR2(20)
+ ACCOUNTNO
+
+
+                                                                                                                   NOT NULL NUMBER(10)
+ AGENTNAME
+
+
+
+    VARCHAR2(20)
+
+SQL> insert into userrole values('admin', 'admin123', 'CLAIM ADJUSTER', 1234567, 'none');
+
+1 row created.
+
+SQL> insert into userrole values('samskruthi', 'samskruthi26', 'CLAIM HANDLER', 7894561, 'none');
+
+1 row created.
+
+SQL> insert into userrole values('sushanthika', 'sushanthika12', 'INSURED', 4561237, 'samskruthi');
+insert into userrole values('sushanthika', 'sushanthika12', 'INSURED', 4561237, 'samskruthi')
+                                           *
+ERROR at line 1:
+ORA-12899: value too large for column "SYSTEM"."USERROLE"."PASSWORD" (actual: 13, maximum: 12)
+
+
+SQL> desc userrole;
+ Name                                                                                                                                                                                                              
+                                                                                                                   Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ USERNAME
+
+
+                                                                                                                   NOT NULL VARCHAR2(20)
+ PASSWORD
+
+
+                                                                                                                   NOT NULL VARCHAR2(12)
+ ROLECODE
+
+
+                                                                                                                   NOT NULL VARCHAR2(20)
+ ACCOUNTNO
+
+
+                                                                                                                   NOT NULL NUMBER(10)
+ AGENTNAME
+
+
+
+    VARCHAR2(20)
+
+SQL> alter table userrole modify password varchar2(20);
+
+Table altered.
+
+SQL> insert into userrole values('sushanthika', 'sushanthika12', 'INSURED', 4561237, 'samskruthi');
+
+1 row created.
+
+SQL> insert into userrole values('sashwat', 'sashwat12', 'INSURED', 1236549, 'samskruthi');
+
+1 row created.
+
+SQL> insert into userrole values('rajesh', 'rajesh12', 'INSURED', 5289634, 'keerthi');
+
+1 row created.
+
+SQL> insert into policyType values(1, 'fire');
+insert into policyType values(1, 'fire')
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> insert into policyType values(1, 'fire', 80000);
+
+1 row created.
+
+SQL> insert into policyType values(2, 'health', 50000);
+
+1 row created.
+
+SQL> insert into policyType values(3, 'automobile', 65000);
+
+1 row created.
+
+SQL> desc policy;
+ Name
+
+
+                                                                                                                   Null?    Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ POLICYNUMBER
+
+
+
+    NUMBER(10)
+ ACCOUNTNUMBER
+
+
+
+    NUMBER(10)
+ STATUS
+
+
+
+    VARCHAR2(20)
+
+SQL> insert into questionDetails values('1Fire', 1, 'Do you have a previous Insuarance?');
+
+1 row created.
+
+SQL> insert into questionDetails values('2Fire', 1, 'Was the fire generated due to electricity like faulty wiring or gas explosion?');
+
+1 row created.
+
+SQL> insert into questionDetails values('3Fire', 1, 'Was the property fully damaged due to fire?');
+
+1 row created.
+
+SQL> insert into questionDetails values('4Fire', 1, 'Was there any loss of any valueable/important possession?');
+
+1 row created.
+
+SQL> insert into questionDetails values('5Fire', 1, 'Did you file any police report?');
+
+1 row created.
+
+SQL> insert into questionDetails values('1Health', 2, 'Do you have any Disease or health issue?');
+
+1 row created.
+
+SQL> insert into questionDetails values('2Health', 2, 'Do you have any previous medical insuarance coverage?');
+
+1 row created.
+
+SQL> insert into questionDetails values('3Health', 2, 'Were you hospitalised in the last 4 years?');
+
+1 row created.
+
+SQL> insert into questionDetails values('4Health', 2, 'Have you been on any medication previously?');
+
+1 row created.
+
+SQL> insert into questionDetails values('5Health', 2, 'If you have a previous Insuarance, have you exceeded the current existing amount?');
+
+1 row created.
+
+SQL> insert into questionDetails values('1Automobile', 3, 'Do you have the desired bills?');
+
+1 row created.
+
+SQL> insert into questionDetails values('2Automobile', 3, 'Are you the registered owner of the vehicle?');
+
+1 row created.
+
+SQL> insert into questionDetails values('3Automobile', 3, 'Do you want full claim amount reimbursement?');
+
+1 row created.
+
+SQL> insert into questionDetails values('4Automobile', 3, 'Was the police report taken?');
+
+1 row created.
+
+SQL> insert into questionDetails values('5Automobile', 3, 'Do you want a standalone Insurance?');
+
+1 row created.
+
+SQL>

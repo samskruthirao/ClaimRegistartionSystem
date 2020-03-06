@@ -1,0 +1,32 @@
+table userrole:
+
+create table userrole(username varchar2(20),  password varchar2(20) not null, rolecode varchar2(20) not null, accountNo number(10) unique not null, agentName varchar2(20), constraint uname_acc_Constraint PRIMARY KEY(username));
+
+
+table policyType:
+
+create table policyType(policyNumber number(10), policyName varchar2(50) unique, policyPremium number(20,8) not null, constraint policyNum_pk primary key(policyNumber));
+
+
+table policy:
+
+create table policy(policyNumber number(10),  policyPremium number(20, 8), accountNumber number(10), status varchar2(20), constraint policyNum_fk foreign key(policyNumber) references policyType(policyNumber) ON DELETE CASCADE, constraint accNum foreign key(accountNumber) references userrole(accountNo) ON DELETE CASCADE);
+
+
+table claim:
+
+create table claim(claimNumber number(10), claimReason varchar2(50), accidentStreet varchar2(50), accidentCity varchar2(50), accidentState varchar2(50), accidentZip number(30), claimType varchar2(50), policyNumber number(30), username varchar2(20), constraint claimNumer_pk primary key(claimNumber), constraint policyNumber_fk foreign key(policyNumber) References policyType(policyNumber) ON DELETE CASCADE, constraint uname_fk foreign key(username) references userrole(username) ON DELETE CASCADE);
+
+
+table question details:
+
+create table QuestionDetails(questionId varchar2(100) primary key, policyNumber number(10), question varchar2(300), constraint policyNum_ques_fk foreign key(policyNumber) references policyType(policyNumber) ON DELETE CASCADE);
+
+
+table policyDetails:
+
+create table policyDetails(policyNumber number(10), questionId varchar2(100), answer varchar2(30), username varchar2(20), constraint policyNum_policyDetails_fk foreign key(policyNumber) references policyType(policyNumber) ON DELETE CASCADE, constraint username_policyDetails_fk foreign key(username) references userrole(username) ON DELETE CASCADE, constraint quesId_fk foreign key(questionId) references QuestionDetails(questionId) ON DELETE CASCADE);
+
+sequence claimNumber_sequence:
+
+create sequence claimNumber_sequence start with 1 increment by 1 minvalue 1;
